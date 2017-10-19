@@ -1,4 +1,4 @@
-# #####ztree
+# ztree
 简易demo，通过ztree建立树状结构，通过HTML5 drop相关事件实现拖动节点，生成按钮的效果<br>
 难点：<br>
 1、ztree生成后，HTML结构是怎么样的？因为这涉及到如何拿到这些元素节点<br>
