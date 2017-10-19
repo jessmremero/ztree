@@ -65,6 +65,7 @@ $(function() {
             };
         this.ondragend=(function (k) {
                 return function () {
+                    console.log(this)
                     this.flag=false;
                 }
             })(index);//这里是用的立即执行函数，与上面的dragstart事件达到的效果是一致的，那么为什么要这样写，有什么区别？执行机制是什么？立即执行函数里面又加了return该怎么理解它的执行机制？
@@ -72,7 +73,7 @@ $(function() {
             //注意：以此为分界线，前面的dragstart dragend 是作用在被拖拽的元素上的；而后面的dragenter drop等是作用在目标元素上的
             var acceptDiv=$("#div2");
             acceptDiv.each(function (index) {
-            console.log(this)//这里的this指的是each前面的，也就是#div2
+            console.log(this)//这里的this指的是each前面的，也就是#div2.为什么要用each呀？div不需要遍历呀，就为了后面统一用this？
             this.ondragenter=(function(k){
                 
                 return function (e) {
