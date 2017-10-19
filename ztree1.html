@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ztree</title>
+    <link rel="stylesheet" href="./css/zTreeStyle/zTreeStyle.css">
+    <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="jquery.ztree.core.js"></script>
+    
+</head>
+<body style="padding-left: 140px">
+    <div class="content_wrap">
+        <div class="zTreeDemoBackground left">
+            <ul id="ulDiv" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="divT" id="box1" style="width:200px;height:200px;border:1px solid red">
+    
+    </div>
+    <div class="divT" id="box2" style="width:200px;height:200px;border:1px solid red">
+    
+    </div>
+    <div class="divT" id="box3" style="width:200px;height:200px;border:1px solid red">
+    
+    </div>
+    <script>
+        var setting = {    };
+        var zNodes =[
+             {name:"条目列表", open:true,
+                children: [
+                    { name:"叶子节点1"},
+                    { name:"叶子节点2"},
+                    { name:"叶子节点3"},
+                    { name:"叶子节点4"},
+                    { name:"叶子节点5"},
+                    { name:"叶子节点6"},
+                    { name:"叶子节点7"},
+                    { name:"叶子节点8"},
+                    { name:"叶子节点9"}
+             ]}
+        ];
+        $(document).ready(function(){
+            $.fn.zTree.init($("#ulDiv"), setting, zNodes);
+            var liDoms = $('#ulDiv_1_ul li');
+            
+         
+            //循环设置每个子项的draggable属性，以及时候拖动标记
+            liDoms.each(function (index) {
+                console.log(this)
+                this.draggable='true';
+                this.flag=false;
+                this.ondragstart=(function (k) {
+                    return function () {
+                        this.flag=true;
+                        console.log('第'+(k+1)+'项开始移动')
+                    }
+                })(index);
+                this.ondragend=(function (k) {
+                    return function () {
+                        this.flag=false;
+                    }
+                })(index);
+            });
+            //投放区事件
+            var acceptDiv=$(".divT");
+            acceptDiv.each(function (index) {
+                this.ondragenter=(function(k){
+                    return function (e) {
+                        e.preventDefault();
+                    }
+                })(index);
+                this.ondragover=(function(k){
+                    return function (e) {
+                        e.preventDefault();
+                    }
+                })(index);
+                this.ondragleave=(function(k){
+                    return function (e) {
+                        e.preventDefault();
+                    }
+                })(index);
+                this.ondrop = (function(k){
+                    return function (e) {
+                        e.preventDefault();
+                        liDoms.each(function () {
+                            if(this.flag){   
+                                $('.divT:eq('+k+')').append(this)
+                                console.log('落地在第'+(k+1)+'个盒子');
+                            }
+                        });
+                    }
+                })(index);
+            });
+        });
+    </script>
+    </body>
+</html>
